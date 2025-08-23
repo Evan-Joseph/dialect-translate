@@ -1,0 +1,15 @@
+{
+  "type": "nodejs",
+  "build": {
+    "commands": [
+      "npm run build:server",
+      "npm run build"
+    ]
+  },
+  "start": {
+    "command": "node server.js"
+  },
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
