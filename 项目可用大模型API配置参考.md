@@ -18,7 +18,7 @@
       "provider_name": "ChatAnywhere",
       "base_url": "https://api.chatanywhere.tech/v1",
       "credentials": {
-        "api_key": "your_chatanywhere_api_key_here"
+        "api_key": "your_chatanywhere_api_key"
       },
       "allowed_models": [
         "gpt-4"
@@ -30,7 +30,7 @@
       "provider_name": "Xunfei Spark",
       "endpoint": "https://spark-api-open.xf-yun.com/v1/chat/completions",
       "credentials": {
-        "api_password": "your_xunfei_api_password_here"
+        "api_password": "your_xunfei_api_password"
       },
       "allowed_models": [
         "Spark-Lite"
@@ -42,7 +42,7 @@
       "provider_name": "Zhipu GLM",
       "endpoint": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
       "credentials": {
-        "api_key": "your_zhipu_api_key_here"
+        "api_key": "your_zhipu_api_key"
       },
       "allowed_models": [
         "glm-4.5-flash"
@@ -64,7 +64,7 @@
 | :--- | :--- |
 | **Provider Name** | `ChatAnywhere` |
 | **Base URL** | `https://api.chatanywhere.tech/v1` |
-| **API Key** | `your_chatanywhere_api_key_here` |
+| **API Key** | `your_chatanywhere_api_key` |
 | **可用模型** | `gpt-4` |
 | **官方文档** | [https://chatanywhere.apifox.cn/](https://chatanywhere.apifox.cn/) |
 
@@ -76,7 +76,7 @@
 | :--- | :--- |
 | **Provider Name** | `Xunfei Spark` |
 | **HTTP 接口** | `https://spark-api-open.xf-yun.com/v1/chat/completions` |
-| **API Password** | `your_xunfei_api_password_here` |
+| **API Password** | `your_xunfei_api_password` |
 | **可用模型** | `Spark-Lite` |
 | **官方文档** | [https://www.xfyun.cn/doc/spark/通用大模型-http.html](https://www.xfyun.cn/doc/spark/%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1-http.html) |
 
@@ -88,6 +88,6 @@
 | :--- | :--- |
 | **Provider Name** | `Zhipu GLM` |
 | **API URL** | `https://open.bigmodel.cn/api/paas/v4/chat/completions` |
-| **API Key** | `your_zhipu_api_key_here` |
+| **API Key** | `your_zhipu_api_key` |
 | **可用模型** | `glm-4.5-flash` |
 | **官方文档** | [https://docs.bigmodel.cn/cn/guide/develop/http/introduction](https://docs.bigmodel.cn/cn/guide/develop/http/introduction) |
