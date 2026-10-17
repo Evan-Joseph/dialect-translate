@@ -1,217 +1,136 @@
-# 乡音方言翻译平台
+# 🗣️ Xiangyin (乡音) · AI Dialect Translation & Culture Platform
 
-基于AI大语言模型的智能方言翻译工具，传承中华方言文化。
+<p align="center">
+  <b>An AI-Powered Chinese Dialect Translation & Cultural Exploration Platform</b><br>
+  基于 React + Express + Supabase 与多大语言模型路由的中华方言双向翻译与文化探索平台
+</p>
 
-## 项目概述
+<p align="center">
+  <img src="https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black" alt="React 18">
+  <img src="https://img.shields.io/badge/TypeScript-5.5-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Express-4.19-000000?logo=express&logoColor=white" alt="Express">
+  <img src="https://img.shields.io/badge/Supabase-Database%20%7C%20PostgreSQL-3ECF8E?logo=supabase&logoColor=white" alt="Supabase">
+  <img src="https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
+  <img src="https://img.shields.io/badge/LLM-Multi--Model%20Router-orange" alt="Multi-Model Router">
+  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT">
+</p>
 
-本项目是一个前后端分离的Web应用，旨在利用大语言模型技术实现方言与普通话的双向翻译，并提供文化科普和社区反馈功能。
+---
 
-## 技术栈
+## 📖 项目简介 (Overview)
 
-### 前端
-- React 18 + TypeScript
-- Tailwind CSS
-- Vite
-- Axios
+**Xiangyin (乡音)** 是一个旨在保护与传承中华方言多样性的智能化 Web 应用。
 
-### 后端
-- Express 4 + TypeScript
-- Node.js
-- Supabase (PostgreSQL)
+项目采用前后端分离架构，前端基于 **React 18 + Tailwind CSS** 提供温润的国风交互界面，后端基于 **Express + TypeScript** 构建了多大语言模型（LLM）适配层。支持方言到普通话的语义识别与反向地道转译，并集成了文化词源科普与去中心化的社区众包修正机制。
 
-### 外部服务
-- ChatAnywhere (GPT-4)
-- 讯飞星火 (Spark-Lite)
-- 智谱清言 (GLM-4.5-flash)
+---
 
-## 核心功能
+## 🌟 核心特性 (Key Features)
 
-### 1. 双向翻译
-- **方言 → 普通话**：智能识别方言归属地，提供多种温度配置的翻译结果
-- **普通话 → 方言**：支持目标方言选择，生成带注音的翻译结果
+- **🔄 双向方言翻译与发音标注**：
+  - **方言 → 普通话**：自动判定方言语系（如粤语、吴语、闽南语、西南官话等），提取核心语义并保留地方修辞色彩。
+  - **普通话 → 方言**：针对选定地域生成地道方言用词，并伴随汉语拼音或国际音标（IPA）发音指引。
+- **🤖 多模型智能路由 (Multi-Model Adapter)**：
+  - 抽象统一的 LLM Client 接口，原生兼容智谱 GLM、讯飞星火、DeepSeek、OpenAI 等多家 API 供应商。
+  - 支持按需配置生成多样性温度（Temperature）与采样惩罚参数。
+- **📜 文化语境与词源科普卡片**：
+  - 翻译结果自动附带地域历史沿革、典故出处与民俗背景。
+  - 引入 Supabase (PostgreSQL) 缓存机制，避免重复解析开销。
+- **🤝 社区众包反馈与校验**：
+  - 母语者可针对机器翻译提出俚语修正与评价投票，沉淀高质量方言微调数据对。
 
-### 2. 社区反馈
-- 用户可对翻译结果提交修正建议
-- 公开展示所有反馈，支持投票功能
-- 显示用户匿名地理位置信息
+---
 
-### 3. 文化科普
-- 自动生成方言相关的文化背景介绍
-- 包含历史背景、方言特色、文化内涵等内容
-- 支持数据库缓存机制
+## 🏛️ 系统架构 (Architecture)
 
-### 4. 多模型支持
-- 支持多个LLM服务商切换
-- 用户可选择不同的AI模型进行翻译
-- 环境变量配置，支持热修改
+```mermaid
+graph TD
+    Client["💻 React 18 前端界面<br/>(Tailwind CSS + Vite)"] -->|REST API| Server["⚙️ Express 4 后端服务<br/>(TypeScript)"]
+    
+    subgraph Core Services
+      Server --> Cache["💾 Supabase Cache<br/>(词条缓存与热词推荐)"]
+      Server --> Router["🔀 LLM Provider Router"]
+    end
+    
+    Router -->|Adapter| M1["GLM-4 / 清言"]
+    Router -->|Adapter| M2["Spark / 星火"]
+    Router -->|Adapter| M3["OpenAI / DeepSeek"]
+    
+    Server --> Feedback["📝 Community Feedback<br/>(母语者反馈与投票)"]
+```
 
-## 快速开始
+---
 
-### 环境要求
-- Node.js 18+
-- pnpm (推荐) 或 npm
+## 🛠️ 技术栈 (Tech Stack)
 
-### 安装依赖
+| 模块 | 技术选型 | 作用与特性 |
+|---|---|---|
+| **前端呈现** | React 18, Vite, Tailwind CSS, Lucide | 响应式布局、平滑转场与轻量状态管理 |
+| **服务端** | Express 4, Node.js, TypeScript | RESTful API 路由分发与统一异常拦截 |
+| **数据持久化** | Supabase (PostgreSQL) | 翻译历史缓存、社区勘误词条与地理信息标注 |
+| **模型对接** | Axios, OpenAI-compatible SDKs | 流式响应、重试机制与多供应商密钥轮转 |
+
+---
+
+## 📦 项目结构 (Directory Structure)
+
+```text
+dialect-translate/
+├── api/                    # Express 后端应用
+│   ├── config/             # 数据库连接与模型参数配置
+│   ├── services/           # LLM 适配器、地理位置与缓存服务
+│   ├── routes/             # API 路由 (/api/translate, /api/feedback)
+│   └── server.ts           # 服务入口
+├── src/                    # React 前端工程
+│   ├── components/         # 翻译输入框、结果展示卡、社区反馈栏
+│   ├── hooks/              # API 交互与防抖 Hook
+│   └── styles/             # Tailwind 全局样式配置
+└── supabase/               # 数据库 Schema 与表结构定义
+```
+
+---
+
+## 🚀 快速开始 (Quickstart)
+
+### 1. 环境准备
+- Node.js (>= 18.0.0)
+- pnpm 或 npm
+
+### 2. 克隆与依赖安装
 ```bash
+git clone https://github.com/Evan-Joseph/dialect-translate.git
+cd dialect-translate
 pnpm install
 ```
 
-### 环境配置
-1. 复制环境变量模板：
+### 3. 配置环境变量
+复制并编辑 `.env`：
 ```bash
 cp .env.example .env
 ```
 
-2. 配置环境变量：
-```bash
-# LLM API配置
-CHATANYWHERE_API_KEY=your_chatanywhere_api_key
-CHATANYWHERE_BASE_URL=https://api.chatanywhere.tech/v1
-
-XUNFEI_API_PASSWORD=your_xunfei_api_password
-XUNFEI_ENDPOINT=https://spark-api-open.xf-yun.com/v1/chat/completions
-
+配置核心参数：
+```env
+# 核心大模型配置（根据实际供应商选择）
 ZHIPU_API_KEY=your_zhipu_api_key
 ZHIPU_ENDPOINT=https://open.bigmodel.cn/api/paas/v4/chat/completions
 
-# 数据库配置（可选，使用占位符可正常运行）
-SUPABASE_URL=your_supabase_url
-SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_KEY=your_supabase_service_key
+# 可选：Supabase 数据库（若留空则走内存 Mock 兜底）
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your_anon_key
 
-# 服务配置
 PORT=3000
-NODE_ENV=development
-
-# IP地理位置服务（可选）
-IP_GEOLOCATION_API_KEY=your_ip_api_key
 ```
 
-### 启动开发服务器
+### 4. 启动运行
 ```bash
 pnpm run dev
 ```
-
-访问地址：
-- 前端：http://localhost:5173
-- 后端API：http://localhost:3000
-
-## 项目结构
-
-```
-├── api/                    # 后端代码
-│   ├── config/            # 配置文件
-│   │   ├── database.ts    # 数据库配置
-│   │   └── llm.ts         # LLM配置
-│   ├── services/          # 业务服务
-│   │   ├── llmService.ts  # LLM服务
-│   │   ├── databaseService.ts # 数据库服务
-│   │   └── geolocationService.ts # 地理位置服务
-│   ├── routes/            # API路由
-│   │   └── auth.ts        # 主要API路由
-│   ├── app.ts             # Express应用配置
-│   └── server.ts          # 服务器启动文件
-├── src/                   # 前端代码
-│   ├── components/        # React组件
-│   │   ├── TranslationInput/    # 翻译输入组件
-│   │   ├── TranslationResult/   # 翻译结果组件
-│   │   ├── FeedbackBoard/       # 反馈留言板组件
-│   │   └── CultureCard/         # 文化科普卡片组件
-│   ├── hooks/             # 自定义Hook
-│   │   ├── useTranslation.ts    # 翻译Hook
-│   │   ├── useFeedback.ts       # 反馈Hook
-│   │   └── useCulture.ts        # 文化科普Hook
-│   ├── services/          # API服务
-│   │   ├── translationApi.ts    # 翻译API
-│   │   ├── feedbackApi.ts       # 反馈API
-│   │   └── cultureApi.ts        # 文化科普API
-│   ├── types/             # TypeScript类型定义
-│   │   ├── translation.ts       # 翻译相关类型
-│   │   ├── feedback.ts          # 反馈相关类型
-│   │   └── culture.ts           # 文化科普类型
-│   └── pages/             # 页面组件
-│       └── Home.tsx       # 主页
-├── .env.example           # 环境变量模板
-├── package.json           # 项目配置
-└── README.md              # 项目说明
-```
-
-## API接口
-
-### 翻译相关
-- `POST /api/dialect/detect` - 方言归属地推理
-- `POST /api/translate` - 方言翻译
-
-### 反馈相关
-- `POST /api/feedback` - 提交反馈
-- `GET /api/feedback` - 获取反馈列表
-- `POST /api/feedback/:id/vote` - 反馈投票
-
-### 文化科普
-- `GET /api/culture/:region` - 获取文化科普内容
-
-### 其他
-- `GET /api/health` - 健康检查
-- `GET /api/stats` - 获取统计数据
-
-## 开发指南
-
-### 核心开发原则
-1. **范围严格**：严禁开发PRD规定范围之外的任何功能
-2. **无模拟数据**：产品中不得使用任何Mock或伪数据
-3. **API合规**：所有LLM服务调用必须使用指定的API
-4. **配置灵活性**：LLM服务配置通过环境变量管理
-
-### 响应式设计
-- **桌面端 (≥1024px)**：三栏布局
-- **平板端 (768px-1023px)**：两栏布局
-- **移动端 (<768px)**：单栏布局
-
-### 安全考虑
-- API密钥通过环境变量管理
-- IP地址仅存储哈希值
-- 前后端双重输入验证
-- 实现速率限制防止滥用
-
-## 部署
-
-### 生产环境配置
-1. 设置正确的环境变量
-2. 配置Supabase数据库
-3. 设置域名和CORS策略
-4. 启用HTTPS
-
-### Docker部署
-```bash
-# 构建镜像
-docker build -t dialect-translator .
-
-# 运行容器
-docker run -p 3000:3000 --env-file .env dialect-translator
-```
-
-## 贡献指南
-
-1. Fork 项目
-2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开 Pull Request
-
-## 许可证
-
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
-
-## 免责声明
-
-本平台所有翻译和反馈内容均由AI或用户生成，平台不对其准确性负责。请理性使用翻译结果，如有疑问请咨询专业语言学者。
-
-## 联系我们
-
-如有问题或建议，请通过以下方式联系：
-- 提交 Issue
-- 发送邮件至：[your-email@example.com]
+- 前端交互界面：`http://localhost:5173`
+- 后端 API 端点：`http://localhost:3000/api`
 
 ---
 
-**乡音方言翻译平台** - 传承中华方言文化，连接古今语言之美
+## 📄 开源许可证 (License)
+
+本项目采用 [MIT License](LICENSE) 开源。
