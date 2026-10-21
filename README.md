@@ -1,143 +1,128 @@
-# 🗣️ AI 方言翻译与文化传承平台 · 乡音 (Xiangyin)
+# 乡音 · 方言智能互译与文化科普平台 (Dialect Translate)
 
 <p align="center">
-  <b>An AI-Powered Chinese Dialect Translation & Cultural Heritage Platform</b><br>
-  基于 React 18 + Express + Supabase 与多大语言模型路由的中华方言双向翻译与文化探索平台
+  <b>基于多路大语言模型（GPT-4 / 讯飞星火 / 智谱 GLM）与 Supabase 的汉语方言双向翻译、归属地推理与社区语料众包平台</b><br>
+  A Full-Stack Chinese Dialect Translation, Region Detection &amp; Cultural Archiving Web Application
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black" alt="React 18">
   <img src="https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
   <img src="https://img.shields.io/badge/Express-4.21-000000?logo=express&logoColor=white" alt="Express">
-  <img src="https://img.shields.io/badge/Supabase-Database%20%7C%20PostgreSQL-3ECF8E?logo=supabase&logoColor=white" alt="Supabase">
+  <img src="https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase&logoColor=white" alt="Supabase">
   <img src="https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
-  <img src="https://img.shields.io/badge/LLM-Multi--Model%20Router-orange" alt="Multi-Model Router">
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT">
 </p>
 
+---
+
+## 界面总览
+
 <p align="center">
-  <img src="assets/xiangyin_banner.png" width="100%" alt="Xiangyin Banner" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.12);" />
+  <img src="assets/screenshots/01_home.png" width="96%" alt="乡音方言翻译平台主工作台" />
 </p>
 
----
-
-## 🖥️ 实机运行截屏 (Live Screenshots)
-
-| 🗣️ 双向翻译与文化科普卡片 (Home) | 📊 方言检索热度与文化榜单 (Ranking) |
+| 词汇对照、方言文化科普与众包反馈 (`/`) | 方言热度排行榜 (`/ranking`) |
 | :---: | :---: |
-| <img src="assets/screenshots/01_home_live.png" width="480" alt="Xiangyin Home Live" /> | <img src="assets/screenshots/02_ranking_live.png" width="480" alt="Xiangyin Ranking Live" /> |
-| **智能归属地推断与发音标注**：支持方言/普通话双向转译、置信度温度调节与地域文化背景卡。 | **方言文化热词榜单**：统计粤语、吴语、闽南语、西南官话等各大语系的探索频次与文化词条。 |
+| <img src="assets/screenshots/02_culture_feedback.png" width="460" alt="词汇对照与方言文化科普" /> | <img src="assets/screenshots/03_ranking.png" width="460" alt="方言热度排行榜" /> |
+| 展示方言俚语到普通话的逐词映射、地区方言历史渊源与发音特征，右侧同步呈现社区用户提交的译文修正与投票结果。 | 按统计周期（1 天 / 7 天 / 30 天）聚合各大方言区的累计翻译频次、活跃用户数与高频检索短语。 |
 
 ---
 
-## 📖 项目简介 (Overview)
+## 项目简介
 
-**乡音 (Xiangyin)** 是一个旨在保护与传承中华方言多样性的智能化 Web 应用。
+**乡音方言翻译平台（Dialect Translate）** 是面向汉语方言跨地域理解与语料沉淀构建的前后端分离 Web 应用。
 
-项目采用前后端分离架构，前端基于 **React 18 + Tailwind CSS** 提供温润的交互界面，后端基于 **Express + TypeScript** 构建了多大语言模型（LLM）适配层。支持方言到普通话的语义识别与反向地道转译，并集成了文化词源科普与去中心化的社区众包修正机制。
+由于各大方言区（川渝、粤语、吴语、东北官话、冀鲁官话、闽南语等）存在大量口语俚语与句末语气词，单一通用机器翻译往往丢失语境。本项目通过后端多模型网关集成 **ChatAnywhere (GPT-4)**、**讯飞星火 (Spark)** 与 **智谱清言 (GLM)**，结合多温度采样生成（`temperature = 0.3 / 0.6 / 0.9`）、方言归属地自动识别、结构化文化卡片缓存与社区众包纠错投票，提升方言互译的准确性与可读性。
 
----
+### 核心功能
 
-## 🛠️ 基于源码的核心功能架构 (Code Grounding)
-
-系统完全由源代码定义，核心模块包含：
-
-1. **双向翻译工作台 (`src/components/TranslationInput/` + `TranslationResult/`)**：
-   - **方言 → 普通话**：支持智能识别方言归属地（IP 定位与模型特征判别结合），生成地道普通话语义，保留地方修辞色彩；
-   - **普通话 → 方言**：针对粤语、吴语、闽南语、客家话、四川话等指定语系转译，输出带拼音/国际音标（IPA）发音指引。
-2. **文化探索卡片 (`src/components/CultureCard.tsx` + `useCulture.ts`)**：
-   - 当检测到归属地后，自动从 Supabase 缓存或模型端生成方言历史渊源、典故出处与民俗常识卡片。
-3. **社区众包反馈与校验 (`src/components/FeedbackBoard.tsx` + `useFeedback.ts`)**：
-   - 母语者可针对机器翻译提交俚语修正建议，支持赞同/反对投票，沉淀高质量微调语料。
-4. **方言热度排行榜 (`src/pages/DialectRanking.tsx` + `statsApi.ts`)**：
-   - 实时聚合各大方言语系的检索频次、文化贡献度与用户活跃度排行榜。
-5. **多供应商适配后端 (`api/services/llmService.ts`)**：
-   - 抽象统一适配层，支持智谱 GLM-4、讯飞星火 Spark、OpenAI 协议热插拔与密钥轮转。
+1. **方言与普通话双向互译 (`/api/translate` & `/api/translate/stream`)**：
+   - **方言 → 普通话**：支持自动推理输入文本的方言归属地（如四川话、山东话、上海话），并行输出严谨直译（`0.3`）、自然口语（`0.6`）与意译润色（`0.9`）三档译文及重点方言词汇映射表。
+   - **普通话 → 方言**：支持指定目标方言区，生成地道方言表达并附带罗马音/拼音谐音注音。
+2. **方言归属地智能识别 (`/api/dialect/detect`)**：基于方言特征词与句式结构自动判别来源地区及置信度，同时允许用户手动修正并联动刷新文化科普卡片。
+3. **地区语言文化科普 (`/api/culture/:region`)**：自动生成并持久化缓存各地区方言的历史渊源、声韵调特征与民俗背景。
+4. **社区众包纠错与投票 (`/api/feedback`)**：支持用户针对模型译文提交地道表达修正与补充说明，结合 IP 归属地标识与赞同/反对投票筛选高质量民间语料。
+5. **多维热度榜单 (`/ranking`)**：统计各地区方言在不同时间窗口内的翻译调用量、参与人数与高频短语趋势。
 
 ---
 
-## 🏛️ 系统架构 (Architecture)
-
-```mermaid
-graph TD
-    Client["💻 React 18 前端界面<br/>(Tailwind CSS + Vite)"] -->|REST API| Server["⚙️ Express 4 后端服务<br/>(TypeScript)"]
-    
-    subgraph Core Services
-      Server --> Cache["💾 Supabase Cache<br/>(词条缓存与热词推荐)"]
-      Server --> Router["🔀 LLM Provider Router"]
-    end
-    
-    Router -->|Adapter| M1["GLM-4 / 清言"]
-    Router -->|Adapter| M2["Spark / 星火"]
-    Router -->|Adapter| M3["OpenAI / DeepSeek"]
-    
-    Server --> Feedback["📝 Community Feedback<br/>(母语者反馈与投票)"]
-```
-
----
-
-## 📦 项目代码结构 (Directory Structure)
+## 系统架构与目录结构
 
 ```text
 dialect-translate/
-├── assets/screenshots/      # 从实机运行环境中抓取的真实 UI 截屏
-├── api/                     # Express 后端服务源码
-│   ├── config/              # 数据库连接与模型参数配置
-│   ├── services/            # LLM 适配器、地理位置与缓存服务
-│   ├── routes/              # /api/translate, /api/feedback, /api/stats
-│   └── server.ts            # 服务入口
-├── src/                     # React 前端应用
-│   ├── components/          # 翻译输入框、结果展示卡、社区反馈留言板
-│   ├── hooks/               # useTranslation, useCulture, useFeedback
-│   ├── pages/               # Home (翻译工作台), DialectRanking (方言榜单)
-│   └── services/            # 客户端 API 对接服务
-└── supabase/                # PostgreSQL 表结构定义与缓存索引
+├── api/                            # Express + TypeScript 服务端
+│   ├── config/                     # Supabase 数据库连接与多 LLM 渠道配置 (database.ts, llm.ts)
+│   ├── routes/                     # 翻译、归属地检测、文化科普、反馈投票与统计路由
+│   ├── services/                   # 多模型调度 (llmService.ts)、持久化 (databaseService.ts)、IP 归属地服务
+│   └── app.ts                      # Express 中间件、Helmet 安全头与限流配置
+├── src/                            # React 18 + Vite + Tailwind CSS 前端
+│   ├── components/                 # TranslationInput / TranslationResult / CultureCard / FeedbackBoard
+│   ├── hooks/                      # useTranslation / useCulture / useFeedback 状态管理 Hook
+│   ├── pages/                      # Home (翻译主界面) 与 DialectRanking (方言打榜页)
+│   ├── services/                   # Axios API 客户端封装与 SSE 流式解析
+│   └── types/                      # 前后端共享领域类型定义
+├── supabase/                       # 数据库迁移 SQL 脚本
+└── assets/screenshots/             # 实机运行界面截图
 ```
 
 ---
 
-## 🚀 快速开始 (Quickstart)
+## 快速开始
 
 ### 1. 安装依赖
 
 ```bash
 git clone https://github.com/Evan-Joseph/dialect-translate.git
 cd dialect-translate
-pnpm install
+npm install
 ```
 
 ### 2. 配置环境变量
 
-复制并编辑 `.env`：
+复制 `.env.example` 为 `.env`，按需填入至少一个大模型服务商密钥与 Supabase 连接信息：
+
 ```bash
 cp .env.example .env
 ```
 
-配置核心参数：
-```env
-# 核心大模型配置
+```ini
+# 大语言模型接口配置（任选其一或配置多路备用）
+CHATANYWHERE_API_KEY=your_chatanywhere_api_key
+CHATANYWHERE_BASE_URL=https://api.chatanywhere.tech/v1
+
+XUNFEI_API_PASSWORD=your_xunfei_api_password
+XUNFEI_ENDPOINT=https://spark-api-open.xf-yun.com/v1/chat/completions
+
 ZHIPU_API_KEY=your_zhipu_api_key
 ZHIPU_ENDPOINT=https://open.bigmodel.cn/api/paas/v4/chat/completions
 
-# 可选：Supabase 数据库（若留空则走内存 Mock 兜底）
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_ANON_KEY=your_anon_key
+# Supabase 数据库配置（用于持久化社区反馈与文化卡片缓存）
+SUPABASE_URL=your_supabase_url
+SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_KEY=your_supabase_service_key
 
 PORT=3000
+NODE_ENV=development
 ```
 
-### 3. 本地启动
+### 3. 启动前后端联调
 
 ```bash
-# 同时启动前端与后端
-pnpm run dev
+# 同时启动 Vite 前端 (http://localhost:5173) 与 Express 后端 (http://localhost:3000)
+npm run dev
 ```
 
-- 前端交互界面：`http://localhost:5173`
-- 后端 API 端点：`http://localhost:3000/api`
+### 4. 类型检查与生产构建
+
+```bash
+npm run check
+npm run build
+npm start
+```
 
 ---
 
-## 📄 开源许可证 (License)
+## 开源许可
 
 本项目采用 [MIT License](LICENSE) 开源。
